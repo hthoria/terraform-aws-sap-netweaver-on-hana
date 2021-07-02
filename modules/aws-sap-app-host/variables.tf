@@ -85,6 +85,11 @@ variable "customer_default_sg_ids" {
   default     = []
   description = "(Optional) List of preexisting security groups to be attached to the instance. The required security groups are created automatically, this is just for mandatory default ones"
 }
+#Code added by Harsh on 07/01/2021 for vpc_security_group_ids variable
+variable "vpc_security_group_ids" {
+  default     = []
+  description = "(Optional) List of security groups to be attached to the instance of a custom VPC"
+}
 variable "customer_cidr_blocks" {
   type        = list(string)
   default     = []

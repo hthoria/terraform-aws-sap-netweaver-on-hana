@@ -23,10 +23,17 @@ locals {
 resource "null_resource" "hostnames_list" {
   count = var.enabled ? var.instance_count : 0
 
+#Code commented by Harsh on 06/30/2021 for adding new hostname format
+ # triggers = {
+ #   hostname = count.index == 0 ? "a${lower(var.application_code)}${lower(var.sid)}hdb" : "a${lower(var.application_code)}${lower(var.sid)}hdb${count.index + 1}"
+  #}
+#}
+
+#Code added by Harsh on 06/30/2021 for changing the hostname
   triggers = {
-    hostname = count.index == 0 ? "a${lower(var.application_code)}${lower(var.sid)}hdb" : "a${lower(var.application_code)}${lower(var.sid)}hdb${count.index + 1}"
+    hostname = count.index == 0 ? "hbxhdb${lower(var.dbinstanceno)}" : "hbxhdb${lower(var.dbinstanceno)}"
   }
-}
+} 
 
 module instance {
   source = "../_internal-modules/compute/ec2-instance-linux"
@@ -42,7 +49,9 @@ module instance {
   root_volume_size = var.root_volume_size
 
   subnet_ids             = var.subnet_ids
-  vpc_security_group_ids = [aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.customer_default_sg_id]
+  #vpc_security_group_ids = flatten([aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.customer_default_sg_ids])
+  #Code added by Harsh on 07/01/2021 for vpc_security_group_ids
+  vpc_security_group_ids = flatten([aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.vpc_security_group_ids])
   iam_role               = var.default_instance_role ? module.default_instance_role.role_name : var.iam_instance_role
   user_data              = var.user_data
   hostnames              = local.hostnames

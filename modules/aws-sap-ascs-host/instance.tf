@@ -42,7 +42,9 @@ module "instance" {
   root_volume_size = var.root_volume_size
 
   subnet_ids             = var.subnet_ids
-  vpc_security_group_ids = flatten([aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.customer_default_sg_ids])
+  #vpc_security_group_ids = flatten([aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.customer_default_sg_ids])
+  #Code added by Harsh on 07/01/2021 for vpc_security_group_ids
+  vpc_security_group_ids = flatten([aws_security_group.instance.*.id[0], aws_security_group.sap_application.*.id[0], var.vpc_security_group_ids])
   iam_role               = var.default_instance_role ? module.default_instance_role.role_name : var.iam_instance_role
   hostnames              = local.hostnames
   user_data              = var.user_data

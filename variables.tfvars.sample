@@ -17,50 +17,50 @@
  */
 
 # Generic variables
-aws_region = "<region>"
+aws_region = "us-east-1"
 enabled    = true
 
 #Tags and Naming
-application_code = "<application_code>"
-application_name = "<application_name>"
-environment_type = "<environment>"
+application_code = "test
+application_name = "SAP"
+environment_type = "Development"
 
 #Networking
-vpc_id                 = "<vpc_id>"
-subnet_ids             = ["subnet_id_1", "subnet_id_2"]
+vpc_id                 = "vpc-03283c51f5fa62c15"
+subnet_ids             = ["subnet-09ccac07cc94942b8", "subnet-089e695a5e6aee3b1"]
 dns_zone_name          = "<dns_zone_name>"
 customer_default_sg_id = "<default_security_group_id>"
 
 # Operation System
-ami_id  = "<ami_id>"
-ssh_key = "<key_pair_name>"
+ami_id  = "ami-0fde50fcbcd46f2f7"
+ssh_key = "acloudguru"
 
 # Security
-kms_key_arn           = "<kms_key_id>"
+kms_key_arn           = "arn:aws:kms:us-east-1:545512786560:key/b84e9202-c008-4e8e-801a-6bc827b0fe6b"
 default_instance_role = true
 
 # SAP parameters
-sid               = "<sap_sid>"
+sid               = "S4H"
 high_availability = false
 
 
 # HANA Database Parameters
 hana_is_scale_out               = false
-hana_instance_type              = "<instance_type>"
-root_volume_size                = <defaulted_to_50>
-hana_disks_data_storage_type    = "<gp2_or_io1>"
-hana_disks_logs_storage_type    = "<gp2_or_io1>"
-hana_disks_backup_storage_type  = "<st1>"
-hana_disks_shared_storage_type  = "<gp2_or_io1>"
+hana_instance_type              = "r5.8xlarge"
+root_volume_size                = 10
+hana_disks_data_storage_type    = "gp2"
+hana_disks_logs_storage_type    = "gp2"
+hana_disks_backup_storage_type  = "st1"
+hana_disks_shared_storage_type  = "gp2"
 hana_disks_shared_size          = <defaulted_to_512>
-hana_disks_usr_sap_storage_type = "<gp2_or_io1>"
-hana_disks_usr_sap_storage_size = <defaulted_to_50>
+hana_disks_usr_sap_storage_type = "gp2"
+hana_disks_usr_sap_storage_size = 10
 
 
 # Netweaver Application Servers Parameters
-ascs_instance_type          = "<instance_type>"
-as_instance_type            = "<instance_type>"
+ascs_instance_type          = "m4.xlarge"
+as_instance_type            = "m4.xlarge"
 as_instance_count           = 1
 efs_sapmnt                  = true
-ascs_root_volume_size       = <defaulted_to_50>
-app_server_root_volume_size = <defaulted_to_50>
+ascs_root_volume_size       = 10
+app_server_root_volume_size = 10

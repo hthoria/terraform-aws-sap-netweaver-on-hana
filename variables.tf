@@ -40,6 +40,11 @@ variable "environment_type" {
   description = "(Required) Environment type of SAP Netweaver system, e.x. 'dev', 'test', 'prod'"
   type        = string
 }
+#code added by harsh for hostname change
+variable "dbinstanceno" {
+  description = "(Required) Enter the HANA Database instance number"
+  type        = string
+}
 
 #Networking
 variable "vpc_id" {
@@ -56,6 +61,11 @@ variable "dns_zone_name" {
 }
 variable "customer_default_sg_id" {
   description = "(Optional) List of preexisting security groups to be attached to the instance. The required security groups are created automatically, this is just for mandatory default ones"
+  default     = []
+}
+#code added by harsh for Security group IDs
+variable "vpc_security_group_ids" {
+  description = "List of security groups to be added to the instance in a custom VPC"
   default     = []
 }
 variable "customer_cidr_blocks" {

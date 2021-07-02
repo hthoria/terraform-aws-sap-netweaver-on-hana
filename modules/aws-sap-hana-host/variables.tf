@@ -79,7 +79,11 @@ variable "customer_cidr_blocks" {
   default     = ""
   description = "(Optional) The CIDR blocks to allow end-user connectivity from"
 }
-
+#code added by harsh for security groups for custom VPCs
+variable "vpc_security_group_ids" {
+  default     = []
+  description = "List of security groups for custom VPC"
+}
 
 # OS Parameters
 variable "ami_id" {
@@ -133,6 +137,9 @@ variable "environment" {
 }
 variable "application_code" {
   description = "(Required) The unique application code for resource naming"
+}
+variable "dbinstanceno" {
+  description = "(Required) HANA DB Instance number for hostname"
 }
 variable "application_name" {
   description = "(Required) The name of the application being provisioned, ex. 'datamart', 'ecc', 's4hana', etc."

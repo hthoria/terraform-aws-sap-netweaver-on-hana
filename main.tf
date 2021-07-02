@@ -16,7 +16,7 @@
  * SOFTWARE OR THE USE OR OTHER DEALINGS IN THE SOFTWARE.
  */
 
-module sap_efs {
+module "sap_efs" {
   source  = "./modules/aws-sap-netweaver-efs"
   enabled = var.enabled
 
@@ -35,7 +35,7 @@ module sap_efs {
 }
 
 
-module hana_host {
+module "hana_host" {
   source = "./modules/aws-sap-hana-host"
 
   # Instance Count depending on the environment
@@ -52,6 +52,9 @@ module hana_host {
   # KMS Key for EBS Volumes Encryption
   kms_key_arn = var.kms_key_arn
 
+  # SSH key for Logging to the Instance #Added by Harsh on 06/30/2021 since EC2 instances are created without Key PAIR 
+  ssh_key = var.ssh_key
+
   # Networking
   vpc_id = var.vpc_id
 
@@ -64,6 +67,9 @@ module hana_host {
   # The default security group to be added
   customer_default_sg_id = var.customer_default_sg_id
 
+  # Code added by Harsh for vpc_security_group_ids parameter
+  vpc_security_group_ids = var.vpc_security_group_ids
+
   # Instance Role
   iam_instance_role = var.default_instance_role ? "" : var.iam_instance_role
 
@@ -71,12 +77,14 @@ module hana_host {
   application_code = lower(var.application_code)
   environment      = lower(var.environment_type)
   application_name = lower(var.application_name)
+  #Code added by Harsh on 06/30/2021 for HANA instance number to be used for host naming
+  dbinstanceno = var.dbinstanceno
 
   # SAP
   sid = var.sid
 }
 
-module sap_ascs_host {
+module "sap_ascs_host" {
   source  = "./modules/aws-sap-ascs-host"
   enabled = var.enabled
 
@@ -87,6 +95,9 @@ module sap_ascs_host {
   ami_id      = var.ami_id
   kms_key_arn = var.kms_key_arn
 
+  # SSH key for Logging to the Instance #Added by Harsh on 06/30/2021 since EC2 instances are created without Key PAIR 
+  ssh_key = var.ssh_key
+
   # Networking
   vpc_id = var.vpc_id
   # The list of subnets to deploy the instances
@@ -95,6 +106,10 @@ module sap_ascs_host {
   dns_zone_name = var.dns_zone_name
   # The CIDR block for the onPremise Network
   customer_default_sg_ids = var.customer_default_sg_id
+
+  # Code added by Harsh for vpc_security_group_ids parameter
+  vpc_security_group_ids = var.vpc_security_group_ids
+
   # The default security group to be added
   efs_security_group_id = module.sap_efs.security_group_id
 
@@ -110,7 +125,7 @@ module sap_ascs_host {
 }
 
 
-module sap_app_host {
+module "sap_app_host" {
   source  = "./modules/aws-sap-app-host"
   enabled = var.enabled
 
@@ -121,6 +136,9 @@ module sap_app_host {
   ami_id      = var.ami_id
   kms_key_arn = var.kms_key_arn
 
+  # SSH key for Logging to the Instance #Added by Harsh on 06/30/2021 since EC2 instances are created without Key PAIR 
+  ssh_key = var.ssh_key
+
   # Networking
   vpc_id = var.vpc_id
   # The list of subnets to deploy the instances
@@ -129,6 +147,10 @@ module sap_app_host {
   dns_zone_name = var.dns_zone_name
   # The CIDR block for the onPremise Network
   customer_default_sg_ids = var.customer_default_sg_id
+
+  # Code added by Harsh for vpc_security_group_ids parameter
+  vpc_security_group_ids = var.vpc_security_group_ids
+
   # The default security group to be added
   efs_security_group_id = module.sap_efs.security_group_id
 
